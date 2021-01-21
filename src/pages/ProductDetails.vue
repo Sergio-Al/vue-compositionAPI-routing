@@ -9,15 +9,19 @@
 
 <script>
 import { inject, computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 export default {
   props: ['pid'],
-  setup(props) {
+  setup() {
     const products = inject('products');
+
+    const route = useRoute();
+
 
     // ponemos products.value porque se injecta como ref (ver App.vue), por eso debemos extraer el valor.
     const selectedProduct = computed(() =>
-      products.value.find((product) => product.id === props.pid)
+      products.value.find((product) => product.id === route.params.pid)
     );
     // Se coloco el .value porque ahora selecteProducts es un ref (porque lo hicimos con computed property).
     const title = computed(() => selectedProduct.value.title);
